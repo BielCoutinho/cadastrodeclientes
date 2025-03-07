@@ -1,0 +1,23 @@
+{
+  "name": "cadastrodeclientes",
+  "version": "1.0.0",
+  "description": "Cadatro de Cliente",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BielCoutinho/cadastrodeclientes.git#main"
+  },
+  "author": "Gabriel Coutinho",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BielCoutinho/cadastrodeclientes/issues"
+  },
+  "homepage": "https://github.com/BielCoutinho/cadastrodeclientes/tree/main#readme",
+  "devDependencies": {
+    "electron": "^35.0.0"
+  }
+}
