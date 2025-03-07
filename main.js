@@ -82,7 +82,15 @@ const template = [
     ]
   },
   {
-    label: 'Relatórios',
+    label: 'Relatório',
+    submenu: [
+        {
+            label: 'Clientes'
+        }
+    ]
+  },
+  {
+    label: 'Ferramentas',
     submenu: [
       {
         label: 'Aplicar zoom',
