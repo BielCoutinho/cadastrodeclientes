@@ -29,39 +29,90 @@
     </div>
 
     <form>
-        <div class="form-row">
+        <div class="form-row d-flex">
           <div class="col-md-4 mb-3">
-            <label for="validationDefault01">Primeiro nome</label>
-            <input type="text" class="form-control" id="validationDefault01" placeholder="Nome" value="Mark" required>
+            <label for="validationDefault01">Nome Completo:</label>
+            <input type="text" class="form-control" id="validationDefault01" placeholder="Nome" required>
           </div>
           <div class="col-md-4 mb-3">
-            <label for="validationDefault02">Sobrenome</label>
-            <input type="text" class="form-control" id="validationDefault02" placeholder="Sobrenome" value="Otto" required>
+            <label for="validationDefault02">CPF:</label>
+            <input type="text" class="form-control" id="cpf" placeholder="CPF" maxlength="50" required>
           </div>
-          <div class="col-md-4 mb-3">
-            <label for="validationDefaultUsername">Usuário</label>
+          
+          <div class="col-md-4 mb-3 text-center">
+            <label for="cemail">E-mail: </label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroupPrepend2">@</span>
               </div>
               <input type="text" class="form-control" id="validationDefaultUsername" placeholder="Usuário" aria-describedby="inputGroupPrepend2" required>
             </div>
+            <label for="cfone">Telefone:</label>
+                <input type="tel" name="fone" id="cfone" size="30" maxlength="50" placeholder="Digite seu telefone" required>
           </div>
+          
         </div>
-        <div class="form-row">
-          <div class="col-md-6 mb-3">
-            <label for="validationDefault03">Cidade</label>
-            <input type="text" class="form-control" id="validationDefault03" placeholder="Cidade" required>
-          </div>
-          <div class="col-md-3 mb-3">
-            <label for="validationDefault04">Estado</label>
-            <input type="text" class="form-control" id="validationDefault04" placeholder="Estado" required>
-          </div>
-          <div class="col-md-3 mb-3">
-            <label for="validationDefault05">CEP</label>
-            <input type="text" class="form-control" id="validationDefault05" placeholder="CEP" required>
-          </div>
-        </div>
+        <fieldset class="endereco">
+                <h2 class="text-dark"> Endereço </h2>
+    
+         <p>       
+        <label for="cep">CEP:</label>
+        <input type="text" id="cep" maxlength="9" onblur="buscarEndereco()" required>
+        </p>
+        <p>
+        <label for="logradouro">Logradouro:</label>
+        <input type="text" id="logradouro">
+        </p>
+        <p>
+        <label for="cnum">Número: </label>
+        <input type="number" name="num" id="cnum"
+        min="0" max="99999" required>
+        </p>
+        <p>
+        <label for="cnum">Complemento: </label>
+        <input type="text" name="text" id="ccomp"
+        min="0" max="99999">
+        </p>
+        <p>
+        <label for="bairro">Bairro:</label>
+        <input type="text" id="bairro">
+        </p>
+        <p>
+        <label for="cidade">Cidade:</label>
+        <input type="text" id="cidade">
+        </p>
+            <label for="uf">UF:</label>
+            <select id="uf">
+                <option value="Selecione">Selecione</option>
+                <option value="AC">AC</option>
+                <option value="AL">AL</option>
+                <option value="AP">AP</option>
+                <option value="AM">AM</option>
+                <option value="BA">BA</option>
+                <option value="CE">CE</option>
+                <option value="DF">DF</option>
+                <option value="ES">ES</option>
+                <option value="GO">GO</option>
+                <option value="MA">MA</option>
+                <option value="MT">MT</option>
+                <option value="MS">MS</option>
+                <option value="MG">MG</option>
+                <option value="PA">PA</option>
+                <option value="PB">PB</option>
+                <option value="PR">PR</option>
+                <option value="PE">PE</option>
+                <option value="PI">PI</option>
+                <option value="RJ">RJ</option>
+                <option value="RN">RN</option>
+                <option value="RS">RS</option>
+                <option value="RO">RO</option>
+                <option value="RR">RR</option>
+                <option value="SC">SC</option>
+                <option value="SP">SP</option>
+                <option value="SE">SE</option>
+                <option value="TO">TO</option>
+            </select>
+            
         <div class="form-group">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
@@ -83,7 +134,7 @@
 
     <footer>
         <p id="dataAtual"></p>
-        <img src="../public/img/dboff.png" alt="icone do banco">
+        <img src="../public/img/dboff.png" alt="icone do banco" id="iconeDB">
     </footer>
 
 

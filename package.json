@@ -19,5 +19,8 @@
   "homepage": "https://github.com/BielCoutinho/cadastrodeclientes/tree/main#readme",
   "devDependencies": {
     "electron": "^35.0.0"
+  },
+  "dependencies": {
+    "mongoose": "^8.12.1"
   }
 }

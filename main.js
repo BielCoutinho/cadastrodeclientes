@@ -1,4 +1,12 @@
-const { app, BrowserWindow, nativeTheme, Menu, shell } = require('electron/main')
+const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain } = require('electron/main')
+
+// Ativação do preload.js (importação do path)
+const path = require('node:path')
+
+// Importação dos métodos conectar e desconectar (modulo de conexão)
+
+const {conectar, desconectar} = require('./database.js')
+const { on } = require('node:events')
 
 // Janela principal
 let win
@@ -12,7 +20,10 @@ const createWindow = () => {
     //resizable: false,
     //minimizable: false,
     //closable: false,
-    //autoHideMenuBar: true
+    //autoHideMenuBar: true,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js')
+  }
   })
 
 
@@ -34,7 +45,7 @@ function aboutWindow() {
     if (mainWindow) {
       about = new BrowserWindow({
         width: 500,
-        height: 500,
+        height: 300,
         autoHideMenuBar: true,
         resizable: false,
         minimizable: false,
@@ -51,6 +62,22 @@ function aboutWindow() {
 // Inicialização da aplicação (assincronismo, ou seja, ".them" indica o assincronismo)
 app.whenReady().then(() => {
   createWindow()
+
+  // Melhor local para etabelecer a conexão com o banco de dados
+//No mongodb é mais eficiente manter uma única conexão aberta durante todo o tempo de vida do aplicativo e encerrar a conexão quando o aplicativo for finalizado
+//ipcMain.on (receber mensagem)
+// db-connect (rótulo da mensagem)
+ ipcMain.on('db-connect', async (event) => {
+  //A linha abaixo estabelece a conexão com o banco de dados 
+  await conectar()
+
+  //Enviar ao renderizador uma mensagem para trocar a imagem do icone do status do banco de dados (criar um delay de 0.5 ou 1s para sincronização com a nuvem)
+  setTimeout(() => {
+    //enviar ao renderizador a mensagem "conectado"
+    //db-status (IPC - comunicação entre processos - preload.js)
+    event.reply('db-status', "conectado")
+  }, 500) //500ms = 0.5s
+ })
  
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
