@@ -15,7 +15,7 @@ const createWindow = () => {
   nativeTheme.themeSource = 'dark'
   win = new BrowserWindow({
     width: 1010, // largura
-    height: 720, // altura
+    height: 920, // altura
     //frame: false
     //resizable: false,
     //minimizable: false,

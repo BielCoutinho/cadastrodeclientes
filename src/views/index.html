@@ -4,143 +4,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'"> 
-    <title>Cadastro</title>
+    <title>Cadastro de Clientes</title>
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
-    <!--CSS personalizado sempre após o CSS do bootstrap-->
     <link rel="stylesheet" href="../public/css/style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f3f4f6, #ffffff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .card {
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-control, select {
+            border-radius: 8px;
+        }
+        .btn-primary {
+            border-radius: 8px;
+            padding: 10px;
+            width: 100%;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
 
-    
-    <div>
-        <nav class="navbar navbar-light bg-light">
-            <div class="col-md-3">
-                <form class="d-flex">
-                    <input class="form-control mr-sm-2" type="search"  aria-label="Buscar">
-                    <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
-                  </form>
-            </div>
-           
-          </nav>
-    </div>
-    <br>
-    <div class="container text-center">
-        <h1>Cadatro de Clientes</h1>
-    </div>
-
-    <form>
-        <div class="form-row d-flex">
-          <div class="col-md-4 mb-3">
-            <label for="validationDefault01">Nome Completo:</label>
-            <input type="text" class="form-control" id="validationDefault01" placeholder="Nome" required>
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="validationDefault02">CPF:</label>
-            <input type="text" class="form-control" id="cpf" placeholder="CPF" maxlength="50" required>
-          </div>
-          
-          <div class="col-md-4 mb-3 text-center">
-            <label for="cemail">E-mail: </label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupPrepend2">@</span>
-              </div>
-              <input type="text" class="form-control" id="validationDefaultUsername" placeholder="Usuário" aria-describedby="inputGroupPrepend2" required>
-            </div>
-            <label for="cfone">Telefone:</label>
-                <input type="tel" name="fone" id="cfone" size="30" maxlength="50" placeholder="Digite seu telefone" required>
-          </div>
-          
-        </div>
-        <fieldset class="endereco">
-                <h2 class="text-dark"> Endereço </h2>
-    
-         <p>       
-        <label for="cep">CEP:</label>
-        <input type="text" id="cep" maxlength="9" onblur="buscarEndereco()" required>
-        </p>
-        <p>
-        <label for="logradouro">Logradouro:</label>
-        <input type="text" id="logradouro">
-        </p>
-        <p>
-        <label for="cnum">Número: </label>
-        <input type="number" name="num" id="cnum"
-        min="0" max="99999" required>
-        </p>
-        <p>
-        <label for="cnum">Complemento: </label>
-        <input type="text" name="text" id="ccomp"
-        min="0" max="99999">
-        </p>
-        <p>
-        <label for="bairro">Bairro:</label>
-        <input type="text" id="bairro">
-        </p>
-        <p>
-        <label for="cidade">Cidade:</label>
-        <input type="text" id="cidade">
-        </p>
-            <label for="uf">UF:</label>
-            <select id="uf">
-                <option value="Selecione">Selecione</option>
-                <option value="AC">AC</option>
-                <option value="AL">AL</option>
-                <option value="AP">AP</option>
-                <option value="AM">AM</option>
-                <option value="BA">BA</option>
-                <option value="CE">CE</option>
-                <option value="DF">DF</option>
-                <option value="ES">ES</option>
-                <option value="GO">GO</option>
-                <option value="MA">MA</option>
-                <option value="MT">MT</option>
-                <option value="MS">MS</option>
-                <option value="MG">MG</option>
-                <option value="PA">PA</option>
-                <option value="PB">PB</option>
-                <option value="PR">PR</option>
-                <option value="PE">PE</option>
-                <option value="PI">PI</option>
-                <option value="RJ">RJ</option>
-                <option value="RN">RN</option>
-                <option value="RS">RS</option>
-                <option value="RO">RO</option>
-                <option value="RR">RR</option>
-                <option value="SC">SC</option>
-                <option value="SP">SP</option>
-                <option value="SE">SE</option>
-                <option value="TO">TO</option>
-            </select>
+    <div class="container">
+        <div class="card p-4">
+            <h2 class="text-center text-primary fw-bold">Cadastro de Clientes</h2>
             
-        <div class="form-group">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-            <label class="form-check-label" for="invalidCheck2">
-              Concordo com os termos e condições
-            </label>
-          </div>
+            <form>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="validationDefault01" class="form-label">Nome Completo:</label>
+                        <input type="text" class="form-control" id="validationDefault01" placeholder="Nome" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="cpf" class="form-label">CPF:</label>
+                        <input type="text" class="form-control" id="cpf" placeholder="CPF" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="validationDefaultUsername" class="form-label">E-mail:</label>
+                        <input type="email" class="form-control" id="validationDefaultUsername" placeholder="E-mail" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="cfone" class="form-label">Telefone:</label>
+                        <input type="tel" class="form-control" id="cfone" placeholder="Telefone" required>
+                    </div>
+                </div>
+
+                <h4 class="text-dark mt-4">Endereço</h4>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="cep" class="form-label">CEP:</label>
+                        <input type="text" class="form-control" id="cep" placeholder="CEP" required>
+                    </div>
+                    <div class="col-md-8 mb-3">
+                        <label for="logradouro" class="form-label">Logradouro:</label>
+                        <input type="text" class="form-control" id="logradouro" placeholder="Rua / Avenida">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="cnum" class="form-label">Número:</label>
+                        <input type="number" class="form-control" id="cnum" min="0" max="99999" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="ccomp" class="form-label">Complemento:</label>
+                        <input type="text" class="form-control" id="ccomp">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="bairro" class="form-label">Bairro:</label>
+                        <input type="text" class="form-control" id="bairro">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <label for="cidade" class="form-label">Cidade:</label>
+                        <input type="text" class="form-control" id="cidade">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="uf" class="form-label">UF:</label>
+                        <select id="uf" class="form-control">
+                            <option value="">Selecione</option>
+                            <option value="SP">SP</option>
+                            <option value="RJ">RJ</option>
+                            <option value="MG">MG</option>
+                            <option value="RS">RS</option>
+                            <option value="PR">PR</option>
+                            <option value="SC">SC</option>
+                            <option value="BA">BA</option>
+                            <option value="PE">PE</option>
+                            <option value="CE">CE</option>
+                            <option value="GO">GO</option>
+                            <option value="DF">DF</option>
+                            <option value="AM">AM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group mt-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="invalidCheck2" required>
+                        <label class="form-check-label" for="invalidCheck2">
+                            Concordo com os termos e condições
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary mt-3" type="submit">Enviar</button>
+            </form>
         </div>
-        <button class="btn btn-primary" type="submit">Enviar</button>
-      </form>
-    
-    
-
-    
-
-
-    
-
+    </div>
 
     <footer>
         <p id="dataAtual"></p>
-        <img src="../public/img/dboff.png" alt="icone do banco" id="iconeDB">
+        <img src="../public/img/dboff.png" alt="Ícone do banco" id="iconeDB">
     </footer>
 
-
     <script src="../public/js/bootstrap.min.js"></script>
-
-    <!--Processo de renderização-->
     <script src="../views/renderer.js"></script>
 
 </body>
