@@ -8,6 +8,7 @@
 
 body {
     font-family: "static";
+    overflow: hidden; /* Impede a rolagem */
 }
 
 
