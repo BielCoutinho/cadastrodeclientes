@@ -14,7 +14,7 @@ const createWindow = () => {
   // definindo tema da janela claro ou escuro
   nativeTheme.themeSource = 'dark'
   win = new BrowserWindow({
-    width: 1010, // largura
+    width: 1210, // largura
     height: 920, // altura
     //frame: false
     //resizable: false,
