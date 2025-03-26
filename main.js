@@ -8,16 +8,19 @@ const path = require('node:path')
 const {conectar, desconectar} = require('./database.js')
 const { on } = require('node:events')
 
+//Importação do modelo de dados (Notes.js)
+const clientesModel = require('./src/models/Clientes.js')
+
 // Janela principal
 let win
 const createWindow = () => {
   // definindo tema da janela claro ou escuro
   nativeTheme.themeSource = 'dark'
   win = new BrowserWindow({
-    width: 1210, // largura
-    height: 920, // altura
+    width: 1010, // largura
+    height: 720, // altura
     //frame: false
-    //resizable: false,
+    resizable: true,
     //minimizable: false,
     //closable: false,
     //autoHideMenuBar: true,
@@ -158,3 +161,24 @@ const template = [
     ]
   }
 ]
+
+//===========================================================================
+//= CRUD Create==============================================================
+
+// Recebimento do objeto que contem os dados da nota
+ipcMain.on('create-clientes', async(event, cadastroClientes) =>{
+  //IMPORTANTE! Teste do reecebimento do objeto (Passo 2)
+  console.log(cadastroClientes)
+  //Criar uma nova estrutura de dados para salvar no banco
+  //Atençaõ!! os atributos da estrutura precisam se idênticos ao modelo e os valores são obtidos atraves do objeto sticknotes
+  const newClientes = clientesModel ({
+    texto: cadastroClientes.textClientes
+    
+  })
+  //Salvar a nota no banco de dados (Passo 3:fluxo)
+  newClientes.save()
+})
+
+
+//== Fim - CRUD Create ======================================================
+//===========================================================================
