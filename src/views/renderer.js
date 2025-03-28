@@ -34,4 +34,73 @@ api.dbStatus((event, message) => {
 
 })
 
+/**
+ * Processo de renderização do documento nota.html
+ */
+
+//Para debugar e testar a aplicação é necessário  ativar as ferramentes do desenvolverdor <Ctrl><shift><i>
+
+
+// Capturar foco da caixa de texto
+const foco = document.getElementById('frmCli')
+
+//Alterar as propriedades do documento html ao iniciar a aplicação
+
+document.addEventListener('DOMContentLoaded', () => {
+    foco.focus() //Iniciar o documento com foco na caixa de texto
+})
+
+//Capturar os dados do formulário (Passo 1: - fluxo)
+let frmCli = document.getElementById('frmCli')
+let nomeCliente = document.getElementById('nomeCliente')
+let cpfCliente = document.getElementById('cpfCliente')
+let emailCliente = document.getElementById('emailCliente')
+let telefoneCliente = document.getElementById('telefoneCliente')
+let cep = document.getElementById('cep')
+let logradouro = document.getElementById('logradouro')
+let numero = document.getElementById('numero')
+let complemento = document.getElementById('complemento')
+let bairro = document.getElementById('bairro')
+let cidade = document.getElementById('cidade')
+let uf = document.getElementById('uf')
+
+
+//===========================================================================
+//= CRUD Create==============================================================
+
+// Evento relacionado ao botão submit
+frmCli.addEventListener('submit', (event) => {
+    // Evitar o comportamento padrão (recarregar a página) 
+    event.preventDefault()
+
+    console.log(
+        nomeCliente.value, cpfCliente.value, emailCliente.value, telefoneCliente.value, 
+        cep.value, logradouro.value, numero.value, complemento.value, bairro.value, cidade.value, uf.value
+    )
+
+    const cadastroClientes = {
+        nome: nomeCliente.value,
+        cpf: cpfCliente.value,
+        email: emailCliente.value,
+        telefone: telefoneCliente.value,
+        cep: cep.value,
+        logradouro: logradouro.value,
+        numero: numero.value,
+        complemento: complemento.value,
+        bairro: bairro.value,
+        cidade: cidade.value,
+        uf: uf.value
+
+    }
+
+    console.log("Enviando para o banco: ", cadastroClientes) // Teste
+    //Enviar o objeto para o main (Passo 2: fluxo)
+    api.createClientes(cadastroClientes)
+})
+
+//== Fim - CRUD Create ======================================================
+//===========================================================================
+
+
+
 
