@@ -42,12 +42,16 @@ api.dbStatus((event, message) => {
 
 
 // Capturar foco da caixa de texto
-const foco = document.getElementById('frmCli')
+const foco = document.getElementById('buscarCli')
 
 //Alterar as propriedades do documento html ao iniciar a aplicação
 
 document.addEventListener('DOMContentLoaded', () => {
-    foco.focus() //Iniciar o documento com foco na caixa de texto
+    //Desativar os botões
+    btnUpdate.disabled = true
+    btnDelete.disabled = true
+    //Iniciar o documento com foco na caixa de texto
+    foco.focus() 
 })
 
 //Capturar os dados do formulário (Passo 1: - fluxo)
@@ -100,6 +104,25 @@ frmCli.addEventListener('submit', (event) => {
 
 //== Fim - CRUD Create ======================================================
 //===========================================================================
+
+
+
+//===========================================================================
+//== Resetar o formulário ===================================================
+function resetForm() {
+    // recarregar a página
+    location.reload()
+}
+
+//Uso da api resetForm quando salvar, editar ou excluir um cliente
+api.resetForm((args) => {
+    resetForm()
+})
+
+
+
+//===========================================================================
+//== Fim - Resetar o formulário =============================================
 
 
 

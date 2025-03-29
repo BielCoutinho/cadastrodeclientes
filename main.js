@@ -1,4 +1,6 @@
-const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain } = require('electron/main')
+
+// dialog: módulo electron para ativar caixas de mensagens
+const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain, dialog } = require('electron/main')
 
 // Ativação do preload.js (importação do path)
 const path = require('node:path')
@@ -172,22 +174,44 @@ ipcMain.on('create-clientes', async (event, cadastroClientes) => {
   //Criar uma nova estrutura de dados para salvar no banco
   //Atençaõ!! os atributos da estrutura precisam se idênticos ao modelo e os valores são obtidos atraves do objeto sticknotes
 
-  const newClientes = clientesModel({
-    nome: cadastroClientes.nome,
-    cpf: cadastroClientes.cpf,
-    email: cadastroClientes.email,
-    telefone: cadastroClientes.telefone,
-    cep: cadastroClientes.cep,
-    logradouro: cadastroClientes.logradouro,
-    numero: cadastroClientes.numero,
-    complemento: cadastroClientes.complemento,
-    bairro: cadastroClientes.bairro,
-    cidade: cadastroClientes.cidade,
-    uf: cadastroClientes.uf
 
-  })
-  //Salvar a nota no banco de dados (Passo 3:fluxo)
-  newClientes.save()
+
+  try {
+    const newClientes = clientesModel({
+      nome: cadastroClientes.nome,
+      cpf: cadastroClientes.cpf,
+      email: cadastroClientes.email,
+      telefone: cadastroClientes.telefone,
+      cep: cadastroClientes.cep,
+      logradouro: cadastroClientes.logradouro,
+      numero: cadastroClientes.numero,
+      complemento: cadastroClientes.complemento,
+      bairro: cadastroClientes.bairro,
+      cidade: cadastroClientes.cidade,
+      uf: cadastroClientes.uf
+
+    })
+    //Salvar a nota no banco de dados (Passo 3:fluxo)
+    await newClientes.save()
+
+
+    //confirmação de cliente adicionado ao banco (uso do dialog)
+      dialog.showMessageBox({
+      type: 'info',
+      title: "Aviso",
+      message: "Cliente adicionado com sucesso",
+      buttons: ['OK']
+    }).then((result) => {
+      // se o botão OK for pressionando
+      if(result.response === 0) {
+        //enviar um pedido para o renderizador limpar os campos (preload.js)
+        event.reply('reset-form')
+      }
+    })
+
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 

@@ -8,7 +8,7 @@
 
 /* Remover margens e garantir que o conteúdo ocupe a tela inteira */
 html, body {
-    font-size: 12px; /* Reduz o tamanho da fonte global */
+    font-size: 11px; /* Reduz o tamanho da fonte global */
     font-family: "static"; /* Se você estiver usando uma fonte personalizada */
     height: 100%;
     margin: 0;
@@ -85,4 +85,14 @@ footer img {
     font-family: "static";
     max-width: 100%;
     overflow: hidden;
+}
+
+#btnReset {
+    width: 48px;
+    height: 48px;
+    background-image: url(../img/limpar.png);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
 }

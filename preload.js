@@ -10,7 +10,8 @@ const { contextBridge, ipcRenderer } = require ('electron')
 //permissoões para estabelecer a comunicação ente processos
 contextBridge.exposeInMainWorld('api', {
     dbStatus: (message) => ipcRenderer.on('db-status', message),
-    createClientes: (cadastroClientes) => ipcRenderer.send('create-clientes', cadastroClientes)
+    createClientes: (cadastroClientes) => ipcRenderer.send('create-clientes', cadastroClientes),
+    resetForm: (args) => ipcRenderer.on('reset-form', args)
 })
 
 //Enviar uma mensagem para o main.js estabelecer um conexão com o banco de dados quando iniciar a aplicação

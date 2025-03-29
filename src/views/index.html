@@ -16,7 +16,7 @@
         <nav class="navbar navbar-light bg-light">
             <div class="col-md-4">
                 <form class="d-flex">
-                    <input class="form-control mr-sm-1" type="search" aria-label="Buscar">
+                    <input class="form-control mr-sm-1" type="search" aria-label="Buscar" id="buscarCli">
                     <button class="btn btn-primary  my-sm-0" type="submit">Buscar</button>
                 </form>
             </div>
@@ -102,10 +102,10 @@
             <hr>
 
             <div class="text-center">
-                <button class="btn btn-primary btn-sm" type="submit">Adicionar</button>
-                <button class="btn btn-success btn-sm" type="submit">Editar</button>
-                <button class="btn btn-dark btn-sm" type="submit">Excluir</button>
-                <button class="btn btn-warning btn-sm" type="submit">Limpar</button>
+                <button class="btn btn-primary btn-sm" type="submit" id="btnCreate">Adicionar</button>
+                <button class="btn btn-success btn-sm" type="submit" id="btnUpdate">Editar</button>
+                <button class="btn btn-dark btn-sm" type="button" id="btnDelete">Excluir</button>
+                <button class="btn btn-warning btn-sm" type="reset" id="btnReset" onclick="resetForm()"></button>
             </div>
         </form>
     </div>
