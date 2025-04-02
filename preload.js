@@ -11,8 +11,19 @@ const { contextBridge, ipcRenderer } = require ('electron')
 contextBridge.exposeInMainWorld('api', {
     dbStatus: (message) => ipcRenderer.on('db-status', message),
     createClientes: (cadastroClientes) => ipcRenderer.send('create-clientes', cadastroClientes),
-    resetForm: (args) => ipcRenderer.on('reset-form', args)
+    resetForm: (args) => ipcRenderer.on('reset-form', args),
+   
 })
+
+contextBridge.exposeInMainWorld('electron', {
+    sendMessage: (channel, data) => {
+      ipcRenderer.send(channel, data)
+    },
+    onReceiveMessage: (channel, callback) => {
+      ipcRenderer.on(channel, callback)
+    }
+  })
+
 
 //Enviar uma mensagem para o main.js estabelecer um conexão com o banco de dados quando iniciar a aplicação
 //db-connect (rótulo para identificar a mensagem)

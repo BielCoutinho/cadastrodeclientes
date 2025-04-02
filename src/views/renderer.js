@@ -124,6 +124,19 @@ api.resetForm((args) => {
 //===========================================================================
 //== Fim - Resetar o formulário =============================================
 
+// ============================================================
+// == Tratamento de exceção CPF duplicado =====================
+
+// Enviar a mensagem de reset-cpf para o main.js
+window.electron.onReceiveMessage('reset-cpf', () => {
+    cpfCliente.value = "";        // Limpar o campo CPF
+    cpfCliente.focus();           // Focar no campo CPF
+    cpfCliente.style.border = '2px solid red'; // Adicionar borda vermelha ao campo CPF
+})
+
+// == Tratamento de exceção CPF duplicado =====================
+// ============================================================
+
 
 
 

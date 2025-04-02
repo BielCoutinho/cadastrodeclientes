@@ -196,21 +196,39 @@ ipcMain.on('create-clientes', async (event, cadastroClientes) => {
 
 
     //confirmação de cliente adicionado ao banco (uso do dialog)
-      dialog.showMessageBox({
+    dialog.showMessageBox({
       type: 'info',
       title: "Aviso",
       message: "Cliente adicionado com sucesso",
       buttons: ['OK']
     }).then((result) => {
       // se o botão OK for pressionando
-      if(result.response === 0) {
+      if (result.response === 0) {
         //enviar um pedido para o renderizador limpar os campos (preload.js)
         event.reply('reset-form')
       }
     })
 
   } catch (error) {
-    console.log(error)
+    // tratamento da excessão "CPF duplicado"
+    if (error.code === 11000) {
+      dialog.showMessageBox({
+        type: 'error',
+        title: "Atenção!",
+        message: "CPF já cadastrado. \nVerifique o número digitado",
+        buttons: ['OK']
+
+      }).then((result) => {
+        // se o botão for pressionado
+        if (result.response === 0) {
+          event.reply('reset-cpf')
+          
+        }
+      })
+
+    } else {
+      console.log(error)
+    }
   }
 })
 
