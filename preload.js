@@ -12,6 +12,8 @@ contextBridge.exposeInMainWorld('api', {
     dbStatus: (message) => ipcRenderer.on('db-status', message),
     createClientes: (cadastroClientes) => ipcRenderer.send('create-clientes', cadastroClientes),
     resetForm: (args) => ipcRenderer.on('reset-form', args),
+    buscarNome:(cliName) => ipcRenderer.send('search-name', cliName),
+    renderClient: (client) => ipcRenderer.on('render-client', client)
    
 })
 

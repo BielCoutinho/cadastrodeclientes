@@ -41,17 +41,19 @@ api.dbStatus((event, message) => {
 //Para debugar e testar a aplicação é necessário  ativar as ferramentes do desenvolverdor <Ctrl><shift><i>
 
 
-// Capturar foco da caixa de texto
-const foco = document.getElementById('buscarCli')
+// Capturar o foco da caixa de texto
+const foco = document.getElementById('buscarCliente')
 
-//Alterar as propriedades do documento html ao iniciar a aplicação
-
+//criar um vetor global para extrair os dados do cliente
+let arrayClient = []
+ 
+// Alterar as propriedades do documento HTML ao iniciar a aplicação
 document.addEventListener('DOMContentLoaded', () => {
     //Desativar os botões
     btnUpdate.disabled = true
     btnDelete.disabled = true
     //Iniciar o documento com foco na caixa de texto
-    foco.focus() 
+    foco.focus()
 })
 
 //Capturar os dados do formulário (Passo 1: - fluxo)
@@ -105,7 +107,43 @@ frmCli.addEventListener('submit', (event) => {
 //== Fim - CRUD Create ======================================================
 //===========================================================================
 
-
+//===========================================================================
+//= CRUD Read ===============================================================
+ 
+function buscarNome() { // Nome da função é o nome do onclick no buscarCliente
+    console.log("Teste do botão buscar")
+    // Capturar o nome a ser pesquisado -> Passo 1
+    let cliName = document.getElementById('buscarCliente').value
+    console.log(cliName) // Teste do passo 1
+    //enviar nome do cliente ao main (passo 2)
+    api.buscarNome(cliName)
+    //receber os dados do cliente (passo 5)
+    api.renderClient((event, client) => {
+        //teste de recebimento dos dados do cliente
+        console.log(client)
+        //passo 6 renderização dos dados do cliente (preencher os inputs do form) - Não esquecer de converter os dados de string para JSON
+        const clientData = JSON.parse(client)
+        arrayClient = clientData
+        // uso do forEach para percorrer o vetor e extrair os dados
+        arrayClient.forEach((c) => {
+            nomeCliente.value = c.nome
+            cpfCliente.value = c.cpf
+            emailCliente.value =c.email
+            telefoneCliente.value = c.telefone
+            cep.value = c.cep
+            logradouro.value = c.logradouro
+            numero.value = c.numero
+            complemento.value = c.complemento
+            bairro.value = c.bairro
+            cidade.value = c.cidade
+            uf.value = c.uf
+            
+        })
+    })
+}
+ 
+//== Fim - CRUD Read ========================================================
+//===========================================================================
 
 //===========================================================================
 //== Resetar o formulário ===================================================
@@ -136,6 +174,8 @@ window.electron.onReceiveMessage('reset-cpf', () => {
 
 // == Tratamento de exceção CPF duplicado =====================
 // ============================================================
+
+
 
 
 
