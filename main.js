@@ -168,7 +168,7 @@ const template = [
     submenu: [
       {
         label: 'Repositório',
-        click: () => shell.openExternal('https://github.com/BielCoutinho/cadastrodeclientes')
+        click: () => shell.openExternal('https://github.com/ericaviana12/cadastro')
       },
       {
         label: 'Sobre',
@@ -255,73 +255,76 @@ async function relatorioClientes() {
     //================================================
     //         Configuração do documento PDF
     //================================================
-    const doc = new jsPDF('p', 'mm', 'a4') // p -> portrait (em pé) / l -> landscape (deitado) / mm -> milímetro / a4 -> tamanho da folha
+    // p -> portrait (em pé) / l -> landscape (deitado)
+    // mm -> milímetro / a4 -> tamanho da folha - 210 milímetros de largura e 297 milímetros de altura
+    const doc = new jsPDF('p', 'mm', 'a4')
 
-    //Inserir data atual no documento
-    // p (portrait) l (landscape)
-    // a4 (210 mm x 297 mm)
-    const dataAtual = new Date().toLocaleDateString('pr-BR')
-    // a linha a baixo escreve um texto no documento (no caso a data atual)
-    // doc.setFontSize() altera o tamanho da fonte em ponto (= word)
+    // Inserir data atual no documento
+    const dataAtual = new Date().toLocaleDateString('pt-BR')
+    // doc.setFontSize() escolhe o tamanho da fonte em pontos (pt), onde 1 ponto equivale a aproximadamente 0,35 mm (igual no Word) 
     doc.setFontSize(10)
-    doc.text(`Data: ${dataAtual}`, 150, 15) //(x,y (mm))
+    // doc.text() escreve um texto no documento
+    doc.text(`Data: ${dataAtual}`, 150, 10) // (x, y (mm)) - 150 mm para direita e 50 mm para baixo
+
+    // Inserir título no documento
     doc.setFontSize(18)
-    doc.text("Relatórios de Clientes", 15, 30)
+    doc.text("Relatório de clientes", 15, 30)
+
+    //================================================
+    // Cabeçalho do documento
+    //================================================
     doc.setFontSize(12)
-    let y = 40 //variável de apoio
-    // cabeçalho da tabela
+    let y = 50 // Variável de apoio
     doc.text("Nome", 14, y)
     doc.text("Telefone", 85, y)
     doc.text("E-mail", 130, y)
-    y += 5
+    y += 5 // += atribui valor ao "y"
 
-    //desenhar uma linha
+    // Desenhar uma linha
     doc.setLineWidth(0.5)
-    doc.line(10, y, 200, y) // (10 (inicio)_________200(fim))
+    doc.line(10, y, 200, y) // (10 (início) __________ 200 (fim))
     y += 10
 
-    //=========================================================
-    //     Obter a listagem de clientes (ordens alfabética)
-    //=========================================================
+    //================================================
+    // Obter a listagem de clientes (ordem alfabética)
+    //================================================
 
     const clientes = await clientesModel.find().sort({ nome: 1 })
-    // Teste  de recebimento (IMPORANTE)
-    //console.log(clientes)
-
-    // popular o documento pdf com os clientes cadastrado
+    // Teste de recebimento (IMPORTANTE!)
+    // console.log(clientes)
+    // Popular o documento PDF com os clientes cadastrados
     clientes.forEach((c) => {
-      // criar uma nova pádina se y > 280mm (A4 = 297mm)
+      // Criar uma nova página se y > 280mm (A4 = 297 mm)
       if (y > 280) {
         doc.addPage()
-        y = 20 // margem de 20mm para iniciar a nova folha
-        // cabeçalho da tabela
+        y = 20 // Margem de 20mm para iniciar a nova folha
+
+        // Cabeçalho do documento
         doc.text("Nome", 14, y)
         doc.text("Telefone", 85, y)
         doc.text("E-mail", 130, y)
-        y += 5
+        y += 5 // += atribui valor ao "y"
 
-        //desenhar uma linha
+        // Desenhar uma linha
         doc.setLineWidth(0.5)
-        doc.line(10, y, 200, y) // (10 (inicio)_________200(fim))
+        doc.line(10, y, 200, y) // (10 (início) __________ 200 (fim))
         y += 10
       }
-      doc.text(c.nome, 15, y)
+      doc.text(c.nome, 14, y)
       doc.text(c.telefone, 85, y)
       doc.text(c.email, 130, y)
       y += 15
-
     })
 
-
     //================================================
-    //  Númeração automáica de páginas
+    //       Numeração automática de páginas
     //================================================
 
     const pages = doc.internal.getNumberOfPages()
-    for (let i=1; i <= pages; i++) {
+    for (let i = 1; i <= pages; i++) {
       doc.setPage(i)
       doc.setFontSize(10)
-      doc.text(`Página ${i} de ${pages}` , 105,290, {align: 'center'})
+      doc.text(`Página: ${i} de ${pages}`, 105, 290, { align: 'center' }) // A VER O ALIGN: 'CENTER'
     }
 
     //================================================
@@ -342,25 +345,54 @@ async function relatorioClientes() {
 //= Fim - Relatório de clientes =============================================
 //===========================================================================
 
-
 //===========================================================================
 //= CRUD Read ===============================================================
- 
-ipcMain.on ('search-name', async (event, cliName) => {
-  //teste de recebimento do nome cliente (passo2)
+
+// Validação da busca
+
+ipcMain.on('validate-search', () => {
+  dialog.showMessageBox({
+    type: 'warning',
+    title: 'Atenção',
+    message: 'Preencha o campo de busca',
+    buttons: ['OK']
+  })
+})
+
+ipcMain.on('search-name', async (event, cliName) => {
+  // Teste de recebimento do nome do cliente -> Passo 2
   console.log(cliName)
-
   try {
-    //passos 3 e 4 (busaca dos dados do cliente pelo nome)
-    //RegExp (expressão regular 'i' -> insensitive (ignorar letras maiúsculas ou minúsculas))
+    // Passo 3 e Passo 4 -> Busca dos dados do cliente pelo nome
     const client = await clientesModel.find({
-      nome: new RegExp(cliName, 'i') 
+      nome: new RegExp(cliName, 'i') // RegExp -> Uma expressão regular do argumento 'i' = insensitive (ignora letras maiúsculas e minúsculas) - logo desabilita o case sensitive
     })
-    //teste a busca do cliente pelo nome (passos 3 e 4)
+    // Teste da busca do cliente pelo nome -> Passo 3 e Passo 4
     console.log(client)
-    //enviar ao renderizador (rendererClient) os dados do cliente (passo 5) OBS: não esquecer de converter para string 
-
-    event.reply('render-client', JSON.stringify(client))
+    // Melhoria da experiência do usuário (se não existir um cliente cadastrado, enviar uma mensagem ao usuário questionando se ele deseja cadastrar este novo cliente)
+    // Se o vetor estiver vazio (lenght retorna o tamanho do vetor)
+    if (client.length === 0) {
+      // Questionar o usuário ...
+      dialog.showMessageBox({
+        type: 'warning',
+        title: 'Aviso',
+        message: 'Cliente não cadastrado. \nDeseja cadastrar este cliente?',
+        defaultId: 0,
+        buttons: ['Sim', 'Não'] // [0, 1] defaultId: 0 = Sim
+      }).then((result) => {
+        // Se o botão sim for pressionado
+        if (result.response === 0) {
+          // Enviar ao renderer.js um pedido para recortar e copiar o nome do cliente do campo de busca para o campo nome (evitar que o usuário digite o nome novamente)
+          event.reply('set-name')
+        } else {
+          // Enviar ao renderer.js um pedido para limpar os campos (reutilizar a API do preload.js 'reset-form)
+          event.reply('reset-form')
+        }
+      })
+    } else {
+      // Enviar ao renderizador (rendererCliente) os dados do cliente | Obs.: Não esquecer de converter para string -> JSON.stringify()
+      event.reply('render-client', JSON.stringify(client))
+    }
 
   } catch (error) {
     console.log(error)
