@@ -70,7 +70,7 @@ function teclaEnter(event) {
         //executar o método de busca do cliente
         buscarNome()
 
-    } 
+    }
 }
 
 //"Escuta" do teclado ('keydown' = pressionar a tecla )
@@ -81,6 +81,68 @@ function restaurarEnter() {
     buscarCliente.removeEventListener('keydown', teclaEnter)
 }
 
+
+function buscarCPF() {
+    const cpf = document.getElementById('cpfCliente').value
+
+    if (cpf === "") {
+        api.validateSearch()
+    } else {
+        api.searchCPF(cpf)
+
+        api.renderClientCPF((event, client) => {
+            const clientData = JSON.parse(client)
+            arrayClient = clientData
+
+            arrayClient.forEach((c) => {
+                nomeCliente.value = c.nome
+                cpfCliente.value = c.cpf
+                emailCliente.value = c.email
+                telefoneCliente.value = c.telefone
+                cep.value = c.cep
+                logradouro.value = c.logradouro
+                numero.value = c.numero
+                complemento.value = c.complemento
+                bairro.value = c.bairro
+                cidade.value = c.cidade
+                uf.value = c.uf
+            })
+
+            restaurarEnter()
+        })
+    }
+}
+
+function buscarCliente() {
+    const nome = document.getElementById('nomeCliente').value
+
+    if (nome === "") {
+        api.validateSearch()
+    } else {
+        api.searchCliente(nome)
+
+        api.renderClientCPF((event, client) => {
+            const clientData = JSON.parse(client)
+            arrayClient = clientData
+
+            arrayClient.forEach((c) => {
+                nomeCliente.value = c.nome
+                cpfCliente.value = c.cpf
+                emailCliente.value = c.email
+                telefoneCliente.value = c.telefone
+                cep.value = c.cep
+                logradouro.value = c.logradouro
+                numero.value = c.numero
+                complemento.value = c.complemento
+                bairro.value = c.bairro
+                cidade.value = c.cidade
+                uf.value = c.uf
+            })
+
+            restaurarEnter()
+        })
+    }
+}
 //== Fim - Manipulação do Enter =============================================
 //===========================================================================
 
@@ -109,7 +171,7 @@ frmCli.addEventListener('submit', (event) => {
         bairro: bairro.value,
         cidade: cidade.value,
         uf: uf.value
-        
+
     }
 
     console.log("Enviando para o banco: ", cadastroClientes) // Teste
@@ -161,7 +223,7 @@ api.setName((args) => {
     // "Recortar" o nome da busca e setar (deixar) no campo nome do formulário
     let busca = document.getElementById('buscarCliente').value
     // Limpar o campo de busca (foco foi capturado de forma global)
-    foco.value=""
+    foco.value = ""
     // Foco no campo nome
     nomeCliente.focus()
     // Copiar o nome do cliente para o campo nome
@@ -206,7 +268,7 @@ function buscarNome() { // Nome da função é o nome do onclick no buscarClient
                 uf.value = c.uf
 
                 // restaurar a tecla Enter
-        restaurarEnter()
+                restaurarEnter()
 
             })
         })

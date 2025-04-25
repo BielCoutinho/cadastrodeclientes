@@ -20,8 +20,13 @@ contextBridge.exposeInMainWorld('api', {
     searchName: (cliName) => ipcRenderer.send('search-name', cliName), // Autoriza o ipcRenderer a enviar o nome do cliente
     renderClient: (client) => ipcRenderer.on('render-client', client), // Função onde o ipcRenderer vai receber os dados do cliente do main.js
     validateSearch: () => ipcRenderer.send('validate-search'), // Validação do campo obrigatório de busca
-    setName: (args) => ipcRenderer.on('set-name', args) // Trocar o nome do campo de busca e colocar no campo nome, caso não tenha esse cliente no cadastro
-})
+    setName: (args) => ipcRenderer.on('set-name', args), // Trocar o nome do campo de busca e colocar no campo nome, caso não tenha esse cliente no cadastro
+    searchCPF: (cpf) => ipcRenderer.send('search-cpf', cpf),
+  renderClientCPF: (callback) => ipcRenderer.on('render-client-cpf', callback),
+  searchCliente: (nome) => ipcRenderer.send('search-cliente', nome),
+  renderClientCliente: (callback) => ipcRenderer.on('render-client-nome', callback)
+
+  })
 
 // Tratamento de exceção CPF duplicado
 contextBridge.exposeInMainWorld('electron', {

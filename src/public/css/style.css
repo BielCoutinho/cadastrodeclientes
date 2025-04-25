@@ -96,3 +96,13 @@ footer img {
     cursor: pointer;
     margin-left: 10px;
 }
+
+#btnLupa {
+    width: 32px;
+    height: 32px;
+    background-image: url(../img/lupa.png);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
