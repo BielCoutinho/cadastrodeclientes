@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //Desativar os botões
     btnUpdate.disabled = true
     btnDelete.disabled = true
+    // Ativar o botão adicionar
+    btnCreate.disabled = false
     //Iniciar o documento com foco na caixa de texto
     foco.focus()
 })
@@ -70,6 +72,7 @@ function teclaEnter(event) {
         //executar o método de busca do cliente
         buscarNome()
 
+
     }
 }
 
@@ -80,17 +83,79 @@ buscarCliente.addEventListener('keydown', teclaEnter)
 function restaurarEnter() {
     buscarCliente.removeEventListener('keydown', teclaEnter)
 }
+// ============
+
+
+function buscarCli() {
+    
+    const nome = document.getElementById('nomeCliente').value
+
+    if (nome === "") {
+        
+        api.validateSearch()
+    } else {
+        api.searchCliente(nome)
+
+        
+    }
+}
+
+api.renderClientCliente((event, client) => {
+    if (event.key === "Enter") {
+        event.preventDefault() // ignorar o comportamento padrão 
+        //executanomer o método de busca do cliente
+        buscarCli()
+
+
+    }
+    const clientData = JSON.parse(client)
+    arrayClient = clientData
+
+    arrayClient.forEach((c) => {
+        nomeCliente.value = c.nome
+        cpfCliente.value = c.cpf
+        emailCliente.value = c.email
+        telefoneCliente.value = c.telefone
+        cep.value = c.cep
+        logradouro.value = c.logradouro
+        numero.value = c.numero
+        complemento.value = c.complemento
+        bairro.value = c.bairro
+        cidade.value = c.cidade
+        uf.value = c.uf
+
+        // restaurar a tecla Enter
+        restaurarEnter()
+        // desativar o botão adicionar
+        btnCreate.disabled = true
+        // ativar os botões editar e excluir
+        btnUpdate.disabled = false
+        btnDelete.disabled = false
+    })
+
+    
+})
+
 
 
 function buscarCPF() {
+    
     const cpf = document.getElementById('cpfCliente').value
 
     if (cpf === "") {
+        
         api.validateSearch()
     } else {
         api.searchCPF(cpf)
 
         api.renderClientCPF((event, client) => {
+            if (event.key === "Enter") {
+                event.preventDefault() // ignorar o comportamento padrão 
+                //executar o método de busca do cliente
+                buscarCPF()
+        
+        
+            }
             const clientData = JSON.parse(client)
             arrayClient = clientData
 
@@ -106,43 +171,29 @@ function buscarCPF() {
                 bairro.value = c.bairro
                 cidade.value = c.cidade
                 uf.value = c.uf
+
+                // restaurar a tecla Enter
+                restaurarEnter()
+                // desativar o botão adicionar
+                btnCreate.disabled = true
+                // ativar os botões editar e excluir
+                btnUpdate.disabled = false
+                btnDelete.disabled = false
             })
 
-            restaurarEnter()
+            
         })
     }
 }
+//"Escuta" do teclado ('keydown' = pressionar a tecla )
+cpfClienteCliente.addEventListener('keydown', teclaEnter)
 
-function buscarCliente() {
-    const nome = document.getElementById('nomeCliente').value
-
-    if (nome === "") {
-        api.validateSearch()
-    } else {
-        api.searchCliente(nome)
-
-        api.renderClientCPF((event, client) => {
-            const clientData = JSON.parse(client)
-            arrayClient = clientData
-
-            arrayClient.forEach((c) => {
-                nomeCliente.value = c.nome
-                cpfCliente.value = c.cpf
-                emailCliente.value = c.email
-                telefoneCliente.value = c.telefone
-                cep.value = c.cep
-                logradouro.value = c.logradouro
-                numero.value = c.numero
-                complemento.value = c.complemento
-                bairro.value = c.bairro
-                cidade.value = c.cidade
-                uf.value = c.uf
-            })
-
-            restaurarEnter()
-        })
-    }
+//função para restaurar o padrão (tecla Enter)
+function restaurarEnter() {
+    cpfCliente.removeEventListener('keydown', teclaEnter)
 }
+
+
 //== Fim - Manipulação do Enter =============================================
 //===========================================================================
 
@@ -269,9 +320,16 @@ function buscarNome() { // Nome da função é o nome do onclick no buscarClient
 
                 // restaurar a tecla Enter
                 restaurarEnter()
+                // desativar o botão adicionar
+                btnCreate.disabled = true
+                // ativar os botões editar e excluir
+                btnUpdate.disabled = false
+                btnDelete.disabled = false
 
             })
         })
     }
 
 }
+
+

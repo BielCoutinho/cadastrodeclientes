@@ -402,6 +402,30 @@ ipcMain.on('search-name', async (event, cliName) => {
 //== Fim - CRUD Read ========================================================
 //===========================================================================
 
+
+ipcMain.on('search-cliente', async (event, nome) => {
+  try {
+    const client = await clientesModel.find({ nome: { $regex: nome, $options: 'i' } 
+    })
+
+    if (client.length === 0) {
+      dialog.showMessageBox({
+        type: 'warning',
+        title: 'Aviso',
+        message: 'Cliente com este nome não foi encontrado.',
+        buttons: ['OK']
+      })
+    } else {
+      event.reply('render-client-cliente', JSON.stringify(client))
+    }
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+
+
+
 ipcMain.on('search-cpf', async (event, cpf) => {
   try {
     const client = await clientesModel.find({
@@ -423,23 +447,4 @@ ipcMain.on('search-cpf', async (event, cpf) => {
   }
 })
 
-ipcMain.on('search-cliente', async (event, nome) => {
-  try {
-    const client = await clientesModel.find({
-      nome: nome
-    })
 
-    if (client.length === 0) {
-      dialog.showMessageBox({
-        type: 'warning',
-        title: 'Aviso',
-        message: 'Cliente com este nome não foi encontrado.',
-        buttons: ['OK']
-      })
-    } else {
-      event.reply('render-client-nome', JSON.stringify(client))
-    }
-  } catch (error) {
-    console.log(error)
-  }
-})
