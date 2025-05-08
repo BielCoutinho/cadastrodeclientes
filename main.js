@@ -405,7 +405,8 @@ ipcMain.on('search-name', async (event, cliName) => {
 
 ipcMain.on('search-cliente', async (event, nome) => {
   try {
-    const client = await clientesModel.find({ nome: { $regex: nome, $options: 'i' } 
+    const client = await clientesModel.find({
+      nome: { $regex: nome, $options: 'i' }
     })
 
     if (client.length === 0) {

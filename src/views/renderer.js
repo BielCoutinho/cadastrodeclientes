@@ -125,7 +125,7 @@ api.renderClientCliente((event, client) => {
         uf.value = c.uf
 
         // restaurar a tecla Enter
-        restaurarEnter()
+        
         // desativar o botão adicionar
         btnCreate.disabled = true
         // ativar os botões editar e excluir
@@ -173,7 +173,7 @@ function buscarCPF() {
                 uf.value = c.uf
 
                 // restaurar a tecla Enter
-                restaurarEnter()
+                
                 // desativar o botão adicionar
                 btnCreate.disabled = true
                 // ativar os botões editar e excluir
@@ -185,13 +185,7 @@ function buscarCPF() {
         })
     }
 }
-//"Escuta" do teclado ('keydown' = pressionar a tecla )
-cpfClienteCliente.addEventListener('keydown', teclaEnter)
 
-//função para restaurar o padrão (tecla Enter)
-function restaurarEnter() {
-    cpfCliente.removeEventListener('keydown', teclaEnter)
-}
 
 
 //== Fim - Manipulação do Enter =============================================
@@ -238,8 +232,11 @@ frmCli.addEventListener('submit', (event) => {
 // == Resetar o formulário ==================================================
 
 function resetForm() {
+    
+    
     // Recarregar a página
     location.reload()
+    
 }
 
 // Uso da API reserForm quando salvar, editar ou excluir um cliente
@@ -269,6 +266,7 @@ window.electron.onReceiveMessage('reset-cpf', () => {
 //= CRUD Read ===============================================================
 
 // Setar o nome do cliente para fazer um novo cadastro se a busca retornar que o cliente não está cadastrado.
+
 api.setName((args) => {
     console.log("Teste do IPC 'set-name'")
     // "Recortar" o nome da busca e setar (deixar) no campo nome do formulário
@@ -279,9 +277,13 @@ api.setName((args) => {
     nomeCliente.focus()
     // Copiar o nome do cliente para o campo nome
     nomeCliente.value = busca
+    
     // restaurar tecla enter
-    restaurarEnter()
+
+    
+    
 })
+
 
 function buscarNome() { // Nome da função é o nome do onclick no buscarCliente
     console.log("Teste do botão buscar")
@@ -319,7 +321,7 @@ function buscarNome() { // Nome da função é o nome do onclick no buscarClient
                 uf.value = c.uf
 
                 // restaurar a tecla Enter
-                restaurarEnter()
+                
                 // desativar o botão adicionar
                 btnCreate.disabled = true
                 // ativar os botões editar e excluir
@@ -329,7 +331,9 @@ function buscarNome() { // Nome da função é o nome do onclick no buscarClient
             })
         })
     }
-
+    
+    
 }
+
 
 
