@@ -25,6 +25,8 @@ contextBridge.exposeInMainWorld('api', {
   renderClientCPF: (callback) => ipcRenderer.on('render-client-cpf', callback),
   searchCliente: (nome) => ipcRenderer.send('search-cliente', nome),
   renderClientCliente: (callback) => ipcRenderer.on('render-client-cliente', callback),
+  deleteClient: (id) => ipcRenderer.send('delet-client',id),
+  updateClient: (cadastroClientes) => ipcRenderer.send('update-client', cadastroClientes), // Envia para o main um objeto - manda a estrutura de dados para ser gravada no banco de dados
 
 
 })

@@ -402,6 +402,35 @@ ipcMain.on('search-name', async (event, cliName) => {
 //== Fim - CRUD Read ========================================================
 //===========================================================================
 
+//===========================================================================
+//== CRUD Delete ============================================================
+
+ipcMain.on('delet-client', async (event, id) => {
+  //console.log(id)
+  const result = await dialog.showMessageBox(win, {
+    type: 'warning',
+    title: "Atenção",
+    message: "Tem certeza que deseja excluir esta nota\nEsta ação não poderá ser desfeita",
+    buttons: ['Cancelar', 'Excluir']
+
+  })
+  if (result.response === 1) {
+    try {
+      const delClient = await clientesModel.findByIdAndDelete(id)
+      event.reply('reset-form')
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+})
+
+
+
+
+//== Fim - CRUD Delete ======================================================
+//===========================================================================
+
 
 ipcMain.on('search-cliente', async (event, nome) => {
   try {
@@ -447,5 +476,79 @@ ipcMain.on('search-cpf', async (event, cpf) => {
     console.log(error)
   }
 })
+
+//===========================================================================
+//== CRUD Update ============================================================
+
+ipcMain.on('update-cliente', async (event, cadastroClientes) => {
+  //console.log(cadastroClientes)//importante (teste do passo 2)
+  //IMPORTANTE! Teste do reecebimento do objeto (Passo 2)
+  console.log(cadastroClientes)
+  //Alterar a  estrutura de dados para salvar no banco
+  //Atençaõ!! os atributos da estrutura precisam se idênticos ao modelo e os valores são obtidos através do objeto
+
+  try {
+    const updateClient = await  clientesModel.findByIdAndUpdate(
+      cadastroClientes.idCli,
+        {
+        nome: cadastroClientes.nome,
+        cpf: cadastroClientes.cpf,
+        email: cadastroClientes.email,
+        telefone: cadastroClientes.telefone,
+        cep: cadastroClientes.cep,
+        logradouro: cadastroClientes.logradouro,
+        numero: cadastroClientes.numero,
+        complemento: cadastroClientes.complemento,
+        bairro: cadastroClientes.bairro,
+        cidade: cadastroClientes.cidade,
+        uf: cadastroClientes.uf
+
+      },
+    {
+      new: true
+    }
+  )
+    
+
+
+    //Mensagem confirmação de cliente
+    dialog.showMessageBox({
+      type: 'info',
+      title: "Aviso",
+      message: "Dados do cliente alterado com sucesso",
+      buttons: ['OK']
+    }).then((result) => {
+      // se o botão OK for pressionando
+      if (result.response === 0) {
+        //enviar um pedido para o renderizador limpar os campos (preload.js)
+        event.reply('reset-form')
+      }
+    })
+
+  } catch (error) {
+    // Tratamento da exceção de CPF duplicado
+    if (error.code === 11000) {
+      dialog.showMessageBox({
+        type: 'error',
+        title: "ATENÇÃO!",
+        message: "CPF já cadastrado. \n Verfique o número digitado.",
+        buttons: ['OK']
+      }).then((result) => {
+        // Se o botão OK for pressionado
+        if (result.response === 0) {
+          event.reply('reset-cpf')
+        }
+      })
+    } else {
+      console.log(error)
+    }
+  }
+
+})
+  
+
+
+//== Fim - CRUD Update ======================================================
+//===========================================================================
 
 
