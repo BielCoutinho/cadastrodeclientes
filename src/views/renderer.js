@@ -289,6 +289,7 @@ function resetForm() {
 
 // Uso da API reserForm quando salvar, editar ou excluir um cliente
 api.resetForm((args) => {
+    console.log("Reset recebido do main.js")
     resetForm()
 })
 

@@ -543,7 +543,7 @@ ipcMain.on('update-cliente', async (event, cadastroClientes) => {
       console.log(error)
     }
   }
-
+  
 })
   
 
