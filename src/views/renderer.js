@@ -110,6 +110,7 @@ api.renderClientCliente((event, client) => {
 
 
     }
+    
     const clientData = JSON.parse(client)
     arrayClient = clientData
 
@@ -135,8 +136,8 @@ api.renderClientCliente((event, client) => {
         btnUpdate.disabled = false
         btnDelete.disabled = false
     })
-
-
+    
+    
 })
 
 
@@ -146,6 +147,26 @@ function buscarCPF() {
     const cpf = document.getElementById('cpfCliente').value
 
     if (cpf === "") {
+         
+        nomeCliente.value = ""
+        emailCliente.value = ""
+        telefoneCliente.value = ""
+        cep.value = ""
+        logradouro.value = ""
+        numero.value = ""
+        complemento.value = ""
+        bairro.value = ""
+        cidade.value = ""
+        uf.value = ""
+    
+        foco.value = ""
+    
+        btnCreate.disabled = false
+        // Foco no campo nome
+        nomeCliente.focus()
+        // Copiar o nome do cliente para o campo nome
+        cpfCliente.value = cpf
+        api.setName()
 
         api.validateSearch()
     } else {
@@ -156,7 +177,7 @@ function buscarCPF() {
                 event.preventDefault() // ignorar o comportamento padrão 
                 //executar o método de busca do cliente
                 buscarCPF()
-
+                
 
             }
             const clientData = JSON.parse(client)
@@ -184,6 +205,8 @@ function buscarCPF() {
                 btnUpdate.disabled = false
                 btnDelete.disabled = false
             })
+
+            
 
 
         })
@@ -282,6 +305,7 @@ function removeClient() {
 function resetForm() {
 
 
+
     // Recarregar a página
     location.reload()
 
@@ -289,6 +313,7 @@ function resetForm() {
 
 // Uso da API reserForm quando salvar, editar ou excluir um cliente
 api.resetForm((args) => {
+    
     console.log("Reset recebido do main.js")
     resetForm()
 })
@@ -317,6 +342,7 @@ window.electron.onReceiveMessage('reset-cpf', () => {
 // Setar o nome do cliente para fazer um novo cadastro se a busca retornar que o cliente não está cadastrado.
 
 api.setName((args) => {
+
     console.log("Teste do IPC 'set-name'")
     // "Recortar" o nome da busca e setar (deixar) no campo nome do formulário
     let busca = document.getElementById('buscarCliente').value
@@ -346,6 +372,11 @@ api.setName((args) => {
 
 
 })
+
+
+
+
+
 
 
 function buscarNome() { // Nome da função é o nome do onclick no buscarCliente
@@ -398,6 +429,8 @@ function buscarNome() { // Nome da função é o nome do onclick no buscarClient
 
 
 }
+
+
 
 
 

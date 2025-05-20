@@ -466,8 +466,18 @@ ipcMain.on('search-cpf', async (event, cpf) => {
       dialog.showMessageBox({
         type: 'warning',
         title: 'Aviso',
-        message: 'Cliente com este CPF não foi encontrado.',
-        buttons: ['OK']
+        message: 'Cliente não cadastrado. \nDeseja cadastrar este cliente?',
+        defaultId: 0,
+        buttons: ['Sim', 'Não'] // [0, 1] defaultId: 0 = Sim
+      }).then((result) => {
+        // Se o botão sim for pressionado
+        if (result.response === 0) {
+          // Enviar ao renderer.js um pedido para recortar e copiar o nome do cliente do campo de busca para o campo nome (evitar que o usuário digite o nome novamente)
+          event.reply('set-name')
+        } else {
+          // Enviar ao renderer.js um pedido para limpar os campos (reutilizar a API do preload.js 'reset-form)
+          event.reply('reset-form')
+        }
       })
     } else {
       event.reply('render-client-cpf', JSON.stringify(client))
@@ -543,6 +553,8 @@ ipcMain.on('update-cliente', async (event, cadastroClientes) => {
       console.log(error)
     }
   }
+  
+
   
 })
   
